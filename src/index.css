@@ -1,3 +1,4 @@
+
 .chatbot-wrapper {
   position: fixed;
   bottom: 90px;
@@ -217,7 +218,7 @@
   width: 80%;
   height: 50px;
   
-  background: linear-gradient(135deg, #3484daff, #2fc4e2ff);
+  background: linear-gradient(135deg, #7694ffff, #7694ffff);
   border-radius: 60px !important;
   border: none !important;
 }
@@ -227,12 +228,24 @@
   --c: 85; 
   
   width: 100%;
-  aspect-ratio: 2.5 /1;
+  aspect-ratio: 2 /1;
   mask: radial-gradient(calc(var(--c)*1%) 100% at 200% calc(-100%*cos(asin(50/var(--c)))),#0000 calc(100% - 1px),#000);
   clip-path: ellipse(calc(var(--c)*1%) 100% at top);
 
 } 
+.curved-rectangle-increase{
+   --c: 85; 
+  
+  width: 100%;
+  aspect-ratio: 2.9  /1;
+  mask: radial-gradient(calc(var(--c)*1%) 100% at 200% calc(-100%*cos(asin(50/var(--c)))),#0000 calc(100% - 1px),#000);
+  clip-path: ellipse(calc(var(--c)*1%) 100% at top);
+}
 .form-control:focus {
   outline: none !important;
   box-shadow: none !important;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+  text-transform: uppercase;
 }

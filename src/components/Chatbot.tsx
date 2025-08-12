@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { FaArrowAltCircleUp, FaChevronDown, FaHome, FaEnvelope, FaQuestionCircle } from "react-icons/fa";
-import { FiRefreshCcw, FiMessageCircle, FiSearch } from 'react-icons/fi';
+import { FaArrowAltCircleUp, FaChevronDown, FaHome, FaEnvelope } from "react-icons/fa";
+import { FiMessageCircle } from 'react-icons/fi';
 import { Button, Form, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactMarkdown from 'react-markdown';
@@ -39,6 +39,7 @@ const Chatbot = () => {
 
 
 
+
   const [userId] = useState(() => {
     const existing = sessionStorage.getItem("chat_ID");
     if (existing) return existing;
@@ -64,7 +65,7 @@ const Chatbot = () => {
   const userName = (sessionStorage.getItem("chat_name") || "Guest").charAt(0).toUpperCase() + (sessionStorage.getItem("chat_name") || "Guest").slice(1);
 
   const helpOptions = [
-    "About Cloud Botics Consultancy",
+    "About Patient Studio",
     "Services & Solutions",
     "Pricing & Plans",
     "Product Features & Bots",
@@ -88,7 +89,7 @@ const Chatbot = () => {
     setTypingMessage("SuAI is typing...");
 
     try {
-      const res = await fetch("https://patientstudio.app.n8n.cloud/webhook/chat-lead-qualification-agent", {
+      const res = await fetch("https://n8n.cloudboticsconsultancy.com/webhook/chat-lead-qualification-agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ chat_ID: userId, message: userMessage })
@@ -189,7 +190,7 @@ const Chatbot = () => {
           alignItems: 'center',
           justifyContent: 'center',
           gap: '8px',
-          background: "linear-gradient(135deg, #3484daff, #2fc4e2ff)",
+          background: "linear-gradient(135deg, #05154d, #7694ffff)",
           border: "none",
           color: 'white',
           boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
@@ -215,7 +216,7 @@ const Chatbot = () => {
           <Card
             style={{
               width: isExtended ? '600px' : '400px',
-              height: isExtended ? '650px' : '630px',
+              height: isExtended ? '650px' : '650px',
               display: 'flex',
               flexDirection: 'column',
               borderRadius: "30px",
@@ -230,53 +231,92 @@ const Chatbot = () => {
             {/* Modern Header */}
             {/* Modern Header with Extend Button */}
             {/* Modern Header with Extend Button */}
+
             <div
-              className={screen === 'intro' || screen === 'form' ? 'curved-rectangle' : ''}
+              className={
+                screen === 'intro' || screen === 'form'
+                  ? isExtended
+                    ? 'curved-rectangle-increase'
+                    : 'curved-rectangle'
+                  : ''
+              }
               style={{
-                background: "linear-gradient(135deg, #3484daff, #2fc4e2ff)",
+                background: "linear-gradient(135deg, #05154d, #7694ffff)",
                 padding: '20px',
-                paddingTop: "40px",
                 color: 'white',
-                minHeight: "150px",
+                minHeight: "120px",
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between', // space between greeting and button
+                flexDirection: 'column',
+                alignItems: 'stretch',
               }}
             >
-              <div>
-                <b>
-                  <h3 style={{ margin: 0, fontWeight: 'bold', fontFamily: "" }}>
-                    Hi {userName} 👋
-                  </h3>
-                </b>
-                <p style={{ margin: 0, fontSize: 15, paddingTop: '10px' }}>
-                  I am <b>SuAI</b>. How can we help?
-                </p>
+              {/* Top Image */}
+              <div style={{ display: 'flex', marginBottom: '10px' }}>
+                <img
+                  src="./image.png"
+                  style={{
+                    width: "45px",
+                    height: "45px",
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+
+                  }}
+                />
+                {/* <h4 style={{
+      paddingTop:"10px",
+      paddingLeft:"35%",
+      fontSize:"16px",
+      fontWeight:"bold"
+    }}> Cloud Botics Consultancy</h4> */}
+                <button
+                  onClick={() => setIsExtended(!isExtended)}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'white',
+                    cursor: 'pointer',
+                    right: "0px",
+                    fontSize: '22px',
+                    // marginLeft: '0%',
+                    marginRight: "10px",
+                    borderRadius: '8px',
+                    transition: 'background-color 0.3s',
+                    position: "absolute"
+
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.27)')}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
+                  aria-label={isExtended ? "Shrink Chatbot" : "Extend Chatbot"}
+                  title={isExtended ? "Shrink Chatbot" : "Extend Chatbot"}
+                >
+                  {isExtended ? <HiOutlineArrowsExpand /> : <RiExpandDiagonalLine />}
+                </button>
               </div>
 
-              {/* Extend toggle button */}
-              <button
-                onClick={() => setIsExtended(!isExtended)}
+              {/* Name & Extend Button Row */}
+              <div
                 style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontSize: '22px',
-                  fontWeight: 'bold',
-                  userSelect: 'none',
-                  padding: '5px 10px',
-                  borderRadius: '8px',
-                  transition: 'background-color 0.3s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingTop: "10px"
                 }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)')}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
-                aria-label={isExtended ? "Shrink Chatbot" : "Extend Chatbot"}
-                title={isExtended ? "Shrink Chatbot" : "Extend Chatbot"}
               >
-                {isExtended ? <HiOutlineArrowsExpand /> : <RiExpandDiagonalLine />}
-              </button>
+                <div>
+                  <b>
+                    <h4 style={{ margin: 0, fontWeight: 'bold', fontFamily: "" }}>
+                      Hi {userName}
+                    </h4>
+                  </b>
+                  <p style={{ margin: 0, fontSize: 14, paddingTop: '5px' }}>
+                    I am <b>SuAI</b> from <b>Patient studio.</b><br></br>How can we help?
+                  </p>
+                </div>
+
+
+              </div>
             </div>
+
 
 
 
@@ -310,7 +350,7 @@ const Chatbot = () => {
                       <strong style={{ fontSize: '15px', color: '#000' }}>Send us a message</strong>
                       <p style={{ margin: 0, fontSize: '13px', color: '#666' }}>We typically reply within an hour</p>
                     </div>
-                    <FaChevronRight color="#3484daff" size={16} />
+                    <FaChevronRight color="#05154d" size={16} />
                   </div>
 
                   {/* Search for help card */}
@@ -323,10 +363,10 @@ const Chatbot = () => {
                     }}
                   >
                     {/* Search title */}
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', background: "#e7e6e6bb", height: "35px", padding: "20px", borderRadius: "20px", }}>
+                    {/* <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', background: "#e7e6e6bb", height: "35px", padding: "20px", borderRadius: "20px", }}>
                       <strong style={{ flex: 1, fontSize: '15px', color: '#000' }}>Search for help</strong>
                       <FaSearch color="#3484daff" size={14} />
-                    </div>
+                    </div> */}
 
                     {/* Help options */}
                     {helpOptions.map((opt, idx) => (
@@ -384,16 +424,16 @@ const Chatbot = () => {
                     {messages.map((msg, idx) => (
                       <div key={idx} style={{ display: 'flex', justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start', marginBottom: '8px' }}>
                         {msg.type === 'bot' && (
-                          <img src="./logo.jpg" alt="Bot" style={{ width: '28px', height: '28px', marginRight: '8px', borderRadius: '50%', backgroundColor: 'green' }} />
+                          <img src="./image.png" alt="Bot" style={{ width: '28px', height: '28px', marginRight: '8px', borderRadius: '50%', backgroundColor: 'green' }} />
                         )}
                         <div style={{
                           maxWidth: '75%',
                           paddingLeft: '13px',
                           paddingTop: '14px',
                           paddingRight: '13px',
-                          borderRadius: '30px',
+                          borderRadius: '15px',
                           color: msg.type === 'user' ? 'white' : 'black',
-                          background: msg.type === 'user' ? 'rgba(43, 149, 211, 1)' : '#f1f1f1',
+                          background: msg.type === 'user' ? '#05154d' : '#f1f1f1',
                           fontSize: "14px"
                         }}>
                           <ReactMarkdown>{msg.text}</ReactMarkdown>
@@ -441,7 +481,7 @@ const Chatbot = () => {
                       style={{
                         marginLeft: '8px',
                         borderRadius: '50%',
-                        background: "linear-gradient(135deg, #3484daff, #2fc4e2ff)",
+                        background: "linear-gradient(135deg, #05154d, #7694ffff)",
                         width: '40px',
                         border: "none",
                         height: '40px',
@@ -637,7 +677,7 @@ const Chatbot = () => {
                     style={{
                       textAlign: 'center',
                       cursor: 'pointer',
-                      color: isActive ? '#2f9ae2ff' : '#555',
+                      color: isActive ? '#2c45a0ff' : '#555',
                       padding: '5px 10px',
                       borderRadius: '8px'
                     }}
