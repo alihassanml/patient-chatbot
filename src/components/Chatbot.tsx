@@ -89,7 +89,7 @@ const Chatbot = () => {
     setTypingMessage("SuAI is typing...");
 
     try {
-      const res = await fetch("https://n8n.cloudboticsconsultancy.com/webhook/chat-lead-qualification-agent", {
+      const res = await fetch("https://patientstudio.app.n8n.cloud/webhook/chat-lead-qualification-agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ chat_ID: userId, message: userMessage })
